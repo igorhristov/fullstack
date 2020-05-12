@@ -1,10 +1,21 @@
 const Mustache = require('mustache');
 const saveHtmlPage = require('./saveHtmlPage');
-const { articles } = require('../index.js');
+// const extendedArticles = require('../index.js');
 
 const homepageTpl = require('../templates/homepage');
 
+const fetch = require('node-fetch');
+
+const getEndpoints = async endpoint => {
+  let response = await fetch(
+    `https://igorfullstack.herokuapp.com/api/${endpoint}`
+  );
+  let data = await response.json();
+  return data;
+};
+
 module.exports = async () => {
+  const articles = await getEndpoints('articles');
   const ITEMS_PER_PAGES = 10;
   const totalPages = Math.ceil(articles.length / ITEMS_PER_PAGES);
 
