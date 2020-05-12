@@ -1,4 +1,4 @@
-const { readJsonFile, saveJsonFile } = require('../../utilities');
+const { readJsonFile, saveJsonFile } = require('../../../utilities');
 
 module.exports = async (req, res) => {
   const authors = await readJsonFile('authors.json');
