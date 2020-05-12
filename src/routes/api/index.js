@@ -3,10 +3,12 @@ const router = require('express').Router();
 const articles = require('./articles');
 const authors = require('./authors');
 const tags = require('./tags');
+const comments = require('./comments');
 
 router.use('/articles', articles);
 router.use('/authors', authors);
 router.use('/tags', tags);
+router.use('/comments', comments);
 
 router
   .route('/')
