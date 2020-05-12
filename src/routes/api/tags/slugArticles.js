@@ -11,5 +11,5 @@ module.exports = async (req, res) => {
   const articles = await readJsonFile('articles.json');
   const slugArticles = articles.filter(article => article.tags.includes(slug));
 
-  res.json({ slugArticles });
+  res.json(slugArticles);
 };

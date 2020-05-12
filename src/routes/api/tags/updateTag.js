@@ -22,5 +22,5 @@ module.exports = async (req, res) => {
   }
 
   await saveJsonFile('tags.json', tags);
-  res.json({ updatedTag });
+  res.json(updatedTag);
 };
