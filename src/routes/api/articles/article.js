@@ -8,5 +8,5 @@ module.exports = async (req, res) => {
 
   !article
     ? res.status(404).json({ msg: 'The article with given ID was not found!' })
-    : res.json({ article });
+    : res.json(article);
 };
