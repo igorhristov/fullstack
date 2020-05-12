@@ -7,6 +7,6 @@ module.exports = async (req, res) => {
   const article = articles.find(({ id }) => id === articleId);
 
   !article
-    ? res.status(404).send('The article with given ID was not found!')
-    : res.json(article);
+    ? res.status(404).json({ msg: 'The article with given ID was not found!' })
+    : res.json({ article });
 };

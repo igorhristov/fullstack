@@ -1,5 +1,4 @@
-const { readJsonFile, saveJsonFile } = require('../../../utilities');
-const { v4: uuidv4 } = require('uuid');
+const { readJsonFile, saveJsonFile } = require('../../utilities');
 
 module.exports = async (req, res) => {
   const authors = await readJsonFile('authors.json');
@@ -8,45 +7,45 @@ module.exports = async (req, res) => {
 
   const { name, avatar, email, username, website, bio } = req.body;
 
-  if (!name || name.length < 3) {
-    return res
-      .status(400)
-      .send('Author Name is required and should be minimum 3 caracters');
-  }
-
-  if (!avatar) {
-    return res.status(400).send('Author avatar is required');
-  }
-
-  if (!email || email.length < 6) {
-    return res.status(400).send('Invalid Author email');
-  }
-
-  if (!website || website.length < 6) {
-    return res.status(400).send('Invalid Author website');
-  }
-
-  if (!bio || bio.length < 20) {
-    return res
-      .status(400)
-      .send('Author bio is required and should be minimum 20 caracters');
-  }
-
-  const updatedauthor = {
-    id: authorId,
-    name,
-    avatar,
-    email,
-    username,
-    website,
-    bio
+  const updateAuthor = {
+    id: author.id,
+    name: name || author.name,
+    avatar: avatar || author.avatar,
+    email: email || author.email,
+    username: username || author.username,
+    website: website || author.website,
+    bio: bio || author.bio
   };
 
+  if (!updateAuthor.name || updateAuthor.name.length < 3) {
+    return res.status(400).json({
+      msg: 'Author Name is required and should be minimum 3 caracters'
+    });
+  }
+
+  if (!updateAuthor.avatar) {
+    return res.status(400).json({ msg: 'Author avatar is required' });
+  }
+
+  if (!updateAuthor.email || updateAuthor.email.length < 6) {
+    return res.status(400).json({ msg: 'Invalid Author email' });
+  }
+
+  if (!updateAuthor.website || updateAuthor.website.length < 6) {
+    return res.status(400).json({ msg: 'Invalid Author website' });
+  }
+
+  if (!updateAuthor.bio || updateAuthor.bio.length < 20) {
+    return res.status(400).json({
+      msg: 'Author bio is required and should be minimum 20 caracters'
+    });
+  }
+
   const updatedAuthors = authors.map(author => {
-    return author.id === updatedauthor.id ? updatedauthor : author;
+    return author.id === updateAuthor.id ? updateAuthor : author;
   });
 
   await saveJsonFile('authors.json', updatedAuthors);
 
-  res.json({ msg: authors.length, updatedauthor });
+  res.json({ msg: authors.length, updateAuthor });
 };

@@ -6,6 +6,6 @@ module.exports = async (req, res) => {
   const author = authors.find(({ id }) => id === authorId);
 
   !author
-    ? res.status(404).send('The author with given ID was not found!')
-    : res.json(author);
+    ? res.status(404).json({ msg: 'The author with given ID was not found!' })
+    : res.json({ author });
 };

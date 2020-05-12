@@ -7,7 +7,9 @@ module.exports = async (req, res) => {
   const author = authors.find(({ id }) => id === authorId);
 
   if (!author) {
-    return res.status(404).send('The author with given ID was not found!');
+    return res
+      .status(404)
+      .json({ msg: 'The author with given ID was not found!' });
   }
 
   const articles = await readJsonFile('articles.json');

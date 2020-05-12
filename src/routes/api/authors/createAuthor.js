@@ -6,27 +6,27 @@ module.exports = async (req, res) => {
   const { name, avatar, email, username, website, bio } = req.body;
 
   if (!name || name.length < 3) {
-    return res
-      .status(400)
-      .send('Author Name is required and should be minimum 3 caracters');
+    return res.status(400).json({
+      msg: 'Author Name is required and should be minimum 3 caracters'
+    });
   }
 
   if (!avatar) {
-    return res.status(400).send('Author avatar is required');
+    return res.status(400).json({ msg: 'Author avatar is required' });
   }
 
   if (!email || email.length < 6) {
-    return res.status(400).send('Invalid Author email');
+    return res.status(400).json({ msg: 'Invalid Author email' });
   }
 
   if (!website || website.length < 6) {
-    return res.status(400).send('Invalid Author website');
+    return res.status(400).json({ msg: 'Invalid Author website' });
   }
 
   if (!bio || bio.length < 20) {
-    return res
-      .status(400)
-      .send('Author bio is required and should be minimum 20 caracters');
+    return res.status(400).json({
+      msg: 'Author bio is required and should be minimum 20 caracters'
+    });
   }
 
   const author = {

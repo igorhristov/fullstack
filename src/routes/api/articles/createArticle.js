@@ -1,5 +1,4 @@
 const { readJsonFile, saveJsonFile } = require('../../../utilities');
-
 const { v4: uuidv4 } = require('uuid');
 
 module.exports = async (req, res) => {
@@ -9,29 +8,31 @@ module.exports = async (req, res) => {
   const { authorId, title, summary, body, tags } = req.body;
 
   if (!authorId) {
-    return res.status(400).send('Author ID is required');
+    return res.status(400).json({ msg: 'Author ID is required' });
   }
 
   if (!title || title.length < 3) {
     return res
       .status(400)
-      .send('Title is required and should be minimum 3 caracters');
+      .json({ msg: 'Title is required and should be minimum 3 caracters' });
   }
 
   if (!summary || summary.length < 20) {
     return res
       .status(400)
-      .send('summary is required and should be minimum 20 caracters');
+      .json({ msg: 'summary is required and should be minimum 20 caracters' });
   }
 
   if (!body || body.length < 50) {
     return res
       .status(400)
-      .send('body is required and should be minimum 50 caracters');
+      .json({ msg: 'body is required and should be minimum 50 caracters' });
   }
 
   if (!tags || tags.length < 1) {
-    return res.status(400).send('tag is required and should at least 1 tag');
+    return res
+      .status(400)
+      .json({ msg: 'tag is required and should at least 1 tag' });
   }
 
   [...tags].forEach(tag => {
