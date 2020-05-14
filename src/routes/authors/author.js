@@ -1,4 +1,4 @@
-const { readJsonFile } = require('../../../utilities.js');
+const { readJsonFile } = require('../../utilities.js');
 
 module.exports = async (req, res) => {
   const authors = await readJsonFile('authors.json');
@@ -7,5 +7,5 @@ module.exports = async (req, res) => {
 
   !author
     ? res.status(404).json({ msg: 'The author with given ID was not found!' })
-    : res.json({ author });
+    : res.json(author);
 };

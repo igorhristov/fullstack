@@ -1,18 +1,17 @@
 const router = require('express').Router();
-const api = require('./api');
+const articles = require('./articles');
+const authors = require('./authors');
+const tags = require('./tags');
+const comments = require('./comments');
 
-router.use('/api', api);
 
-// router
-//   .route('/')
-//   .get((req, res, next) => {
-//     res.json({ message: 'Connected!' });
-//   })
-//   .post((req, res) => {
-//     res.status(200).json({ status: 'Success Post!', data: { body: req.body } });
-//   })
-//   .delete((req, res) => {
-//     res.status(200).json({ msg: 'welcome to DELETE' });
-//   });
+router.use('/api/articles', articles);
+
+router.use('/api/authors', authors);
+
+router.use('/api/tags', tags);
+
+router.use('/api/comments', comments);
+
 
 module.exports = router;

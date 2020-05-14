@@ -6,16 +6,12 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "develop": "nodemon app.js",
-    "build": "node ./src/build",
     "start": "node app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
-    "moment": "^2.24.0",
-    "mustache": "^4.0.1",
-    "node-fetch": "^2.6.0",
     "uuid": "^8.0.0"
   },
   "devDependencies": {
