@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Collaborative Frontend Project</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+</head>
+
+<body class="bg-warning">
+    <nav class="navbar navbar-expand navbar-dark bg-dark">
+        <a class="navbar-brand position-absolute position-fixed m-0 p-0" href="../" style="z-index: 1;">
+            <img class="m-0 p-0" src="../assets/team-b.png" width="64" class="d-inline-block align-top" alt="team b" />
+        </a>
+        <div class="navbar-collapse collapse">
+            <ul class="navbar-nav m-auto">
+
+                <li class="nav-item ml-3 ml-sm-1 my-auto">
+                    <a class="nav-link btn btn-lg btn-outline-primary p-sm-1 p-md-4" href="../">Articles</a>
+                </li>
+
+                <li class="nav-item m-1 my-auto">
+                    <a class="nav-link btn btn-lg btn-outline-primary p-sm-1 p-md-4 active"
+                        href="../authors/">Authors</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container-fluid bg-dark text-light">
+        <div class="row">
+            <h2 class="display-4 font-weight-bold text-warning mt-2 mx-auto">Authors</h2>
+        </div>
+        <div class="row">
+            <p class="lead text-center mx-auto px-5">Hello! Join Us If you want to work for TEAM-B</p>
+            <hr class="w-100 mb-2 pb-1 rounded-pill bg-warning" />
+        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb bg-dark" style="padding-left: 10px;">
+                <li class="breadcrumb-item"><a href="../">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Authors</li>
+                <hr class="w-100 mb-3 p-md-1 rounded-pill bg-warning" />
+            </ol>
+        </nav>
+
+    </div>
+
+    <div id="root"></div>
+
+    <script src="https://unpkg.com/mustache@latest"></script>
+    <script src="../data/data.js"></script>
+    <script src="../data/tags.js"></script>
+    <script src="../data/articles.js"></script>
+    <script src="../data/authors.js"></script>
+    <script src="../data/comments.js"></script>
+    <script src="../templates/authorTpl.js"></script>
+    <script src="../templates/authorsTpl.js"></script>
+    <script src="../authors/script.js"></script>
+</body>
+
+</html>
