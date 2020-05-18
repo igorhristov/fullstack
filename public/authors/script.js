@@ -1,30 +1,29 @@
 const AUTHORS_RUN = async () => {
   const d = document;
-  const articles = await getArticles();
   const authors = await getAuthors().then(authors => {
     return authors.sort((a, b) => {
       return a.name > b.name ? 1 : -1;
     });
   });
-  const getAuthorsAndArticlesNum = authors => {
-    let authorsArr = [];
-    for (let i = 0; i < authors.length; i++) {
-      const articlesNum = articles.filter(article => {
-        return article.authorId === authors[i].id;
-      });
-      authorsArr.push({
-        id: authors[i].id,
-        name: authors[i].name,
-        avatar: authors[i].avatar,
-        email: authors[i].email,
-        username: authors[i].username,
-        website: authors[i].website,
-        bio: authors[i].bio,
-        articlesNumber: articlesNum.length + ' ARTICLES'
-      });
-    }
-    return authorsArr;
-  };
+  // const getAuthorsAndArticlesNum = authors => {
+  //   let authorsArr = [];
+  //   for (let i = 0; i < authors.length; i++) {
+  //     const articlesNum = articles.filter(article => {
+  //       return article.authorId === authors[i].id;
+  //     });
+  //     authorsArr.push({
+  //       id: authors[i].id,
+  //       name: authors[i].name,
+  //       avatar: authors[i].avatar,
+  //       email: authors[i].email,
+  //       username: authors[i].username,
+  //       website: authors[i].website,
+  //       bio: authors[i].bio,
+  //       articlesNumber: articlesNum.length + ' ARTICLES'
+  //     });
+  //   }
+  //   return authorsArr;
+  // };
 
   let currentPage = 0;
   const authorsPerPage = 10;
@@ -53,11 +52,9 @@ const AUTHORS_RUN = async () => {
   };
 
   d.querySelector('#root').innerHTML = Mustache.render(authorsTpl, {
-    authors: getAuthorsAndArticlesNum(
-      authors.slice(
-        currentPage * authorsPerPage,
-        authorsPerPage * (currentPage + 1)
-      )
+    authors: authors.slice(
+      currentPage * authorsPerPage,
+      authorsPerPage * (currentPage + 1)
     ),
     pages: getPages(currentPage),
     pagination: disabledPrevNext(currentPage)
@@ -70,11 +67,9 @@ const AUTHORS_RUN = async () => {
       currentPage = e.target.getAttribute('data-page') * 1;
       console.log(currentPage);
       document.querySelector('#root').innerHTML = Mustache.render(authorsTpl, {
-        authors: getAuthorsAndArticlesNum(
-          authors.slice(
-            currentPage * authorsPerPage,
-            authorsPerPage * (currentPage + 1)
-          )
+        authors: authors.slice(
+          currentPage * authorsPerPage,
+          authorsPerPage * (currentPage + 1)
         ),
         pages: getPages(currentPage),
         pagination: disabledPrevNext(currentPage)
@@ -88,11 +83,9 @@ const AUTHORS_RUN = async () => {
         ? currentPage++
         : currentPage--;
       document.querySelector('#root').innerHTML = Mustache.render(authorsTpl, {
-        authors: getAuthorsAndArticlesNum(
-          authors.slice(
-            currentPage * authorsPerPage,
-            authorsPerPage * (currentPage + 1)
-          )
+        authors: authors.slice(
+          currentPage * authorsPerPage,
+          authorsPerPage * (currentPage + 1)
         ),
         pages: getPages(currentPage),
         pagination: disabledPrevNext(currentPage)
