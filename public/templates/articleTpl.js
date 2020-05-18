@@ -1,6 +1,4 @@
-const artcleTpl = 
-`
-
+const artcleTpl = `
     <div class="row col-sm-12">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb bg-dark" >
@@ -10,7 +8,6 @@ const artcleTpl =
         </nav>
         <hr class="w-100 mb-3 p-1 rounded-pill bg-warning" />
         
-
         
             
             {{#article}}
@@ -29,14 +26,25 @@ const artcleTpl =
                     <p class="p-3 px-4"> {{{ body }}}</p>
                     <div class="row">
                         {{ #tags }}
-                            <a href="../tags/?tag={{ . }}" class=" card-link rounded-pill border border-info text-info  pb-1 px-2 ml-5 mb-2"> {{ . }} </a>
+                            <a href="../tags/?tag={{ x }}" class=" card-link rounded-pill border border-info text-info  pb-1 px-2 ml-5 mb-2"> {{ title }} </a>
                         {{ /tags }}
                     </div>
                 </div>
-                {{/article}}
                 <hr class="w-100 mb-3 p-1 rounded-pill bg-warning" />
-    </div>
+            </div>
+            <div class="container mb-5 mt-5  ">
+                <h3 id="commentReplay" class="mb-2 text-warning">Leave replay</h3>
+                <form action="/api/comments/?id={{id}}"  method="POST">
+                    <div class="form-group mb-4">
+                    <label for="name">Enter Name</label>
+                        <textarea class="form-control" type="text" name="name" id="name" rows="3" placeholder="New Comment!"></textarea>
+                    </div>
+                
+                    <button type="submit" class="btn btn-warning mb-2 ml-auto font-weight-bold text-dark">Post Comment</button>
+                </form>
+            </div>        
     
+    {{/article}}
     {{#comments}}
         <div class='container'>
         <p><span>{{date}}</span></p>
@@ -49,28 +57,5 @@ const artcleTpl =
         </div>
     {{/comments}}
     
-    <div class="container mb-5 mt-5  ">
-        <h3 id="commentReplay" class="mb-2 text-warning">Leave replay</h3>
-        <form>
-            <div class="form-group mb-4">
-               <!-- <label for="writeComment">Example textarea</label> -->
-                <textarea class="form-control" id="writeComment" rows="3" placeholder="New Comment!"></textarea>
-            </div>
-            <div class="form-row">
-                <div class="col-sm-6 ">
-                    <label class="mb-0" for="name">Name</label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="col form-group">
-                    <label class="mb-0" for="email">Email</label>
-                    <input type="email" class="form-control">
-                </div>
-            </div>
-            <div class="form-group ">
-                <label class="mb-0" for="website">Website</label>
-                <input type="text" class="form-control" id="website">
-            </div>
-            <button type="submit" class="btn btn-warning mb-2 ml-auto font-weight-bold text-dark">Post Comment</button>
-        </form>
-    </div>
+  
 `;

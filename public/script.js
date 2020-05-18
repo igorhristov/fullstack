@@ -48,39 +48,18 @@ const BLOG = async () => {
   let currentPage = 0;
   const articlesPerPage = 10;
   const totalPages = Math.ceil(articles.length / articlesPerPage);
-  console.log(totalPages);
-  const getPages = currentPage => {
-    let pages = [];
-    for (let i = 0; i < totalPages; i++) {
-      pages.push({
-        dataPage: i,
-        label: i + 1,
-        activeClass: currentPage === i ? 'active' : ''
-      });
-    }
 
-    return pages;
-  };
-  const disabledPrevNext = currentPage => {
-    let prevNextBtn = [
-      {
-        disabledPrev: currentPage === 0 ? 'disabled' : '',
-        disabledNext: currentPage === totalPages - 1 ? 'disabled' : ''
-      }
-    ];
-    return prevNextBtn;
-  };
   const artTpl = ARTICLE_CARD(baseUrl);
   d.querySelector('#root').innerHTML = Mustache.render(artTpl, {
     articles: getArticleByAuthor(articles, authors, comments, tags).slice(
       currentPage * articlesPerPage,
       articlesPerPage * (currentPage + 1)
     ),
-    pages: getPages(currentPage),
-    pagination: disabledPrevNext(currentPage)
+    pages: getPages(currentPage, totalPages),
+    pagination: disabledPrevNext(currentPage, totalPages)
   });
 
-  const tagArrValue = Object.values(tags);
+  const tagArrValue = Object.keys(tags).map(x => ({ x, title: tags[x] }));
   d.querySelector('#selectRoot').innerHTML = Mustache.render(tagsBtnTpl('./'), {
     tagArrV: tagArrValue
   });
@@ -94,8 +73,8 @@ const BLOG = async () => {
             currentPage * articlesPerPage,
             articlesPerPage * (currentPage + 1)
           ),
-          pages: getPages(currentPage),
-          pagination: disabledPrevNext(currentPage)
+          pages: getPages(currentPage, totalPages),
+          pagination: disabledPrevNext(currentPage, totalPages)
         }
       );
     }
@@ -107,23 +86,44 @@ const BLOG = async () => {
       document.querySelector('#root').innerHTML = Mustache.render(
         ARTICLE_CARD(baseUrl),
         {
-          articles: getArticleByAuthor(articles, authors).slice(
+          articles: getArticleByAuthor(articles, authors, comments, tags).slice(
             currentPage * articlesPerPage,
             articlesPerPage * (currentPage + 1)
           ),
-          pages: getPages(currentPage),
-          pagination: disabledPrevNext(currentPage)
+          pages: getPages(currentPage, totalPages),
+          pagination: disabledPrevNext(currentPage, totalPages)
         }
       );
     }
   });
   const serachButton = d.getElementById('serach-btn');
   const serachBar = d.getElementById('search-bar');
+  const serachTitle = d.getElementById('searchTitle');
+
   serachButton.addEventListener('click', () => {
+    const name = authors.find(author => {
+      if (author.name.toLowerCase().split(' ').includes(serachBar.value)) {
+        return author.id;
+      }
+    });
+
     const results = articles.filter(article => {
+      if (name) {
+        if (article.authorId === name.id) {
+          return article;
+        }
+      }
+
       const title = article.title.toLowerCase().slice(0, -1);
-      console.log(title);
       if (title.split(' ').includes(serachBar.value)) {
+        return article;
+      }
+
+      const tagSlug = [...article.tags]
+        .map(x => tags[x].toLowerCase())
+        .join(' ')
+        .split(' ');
+      if (tagSlug.includes(serachBar.value)) {
         return article;
       }
     });
@@ -131,9 +131,15 @@ const BLOG = async () => {
     d.querySelector('#root').innerHTML = Mustache.render(
       ARTICLE_CARD(baseUrl),
       {
-        articles: getArticleByAuthor(results, authors)
+        articles: getArticleByAuthor(results, authors, comments, tags)
       }
     );
+
+    serachTitle.innerText =
+      'Searching found: ' +
+      results.length +
+      ' articles with ' +
+      serachBar.value;
     d.querySelector('#articlesNum').innerText = results.length;
     sortBtn.className = 'invisible';
   });

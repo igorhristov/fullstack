@@ -1,7 +1,7 @@
 const fs = require('fs').promises;
 const { existsSync } = require('fs');
 const path = require('path');
-const JSON_PATH = path.resolve(__dirname, './data');
+const JSON_PATH = path.resolve(__dirname, '../data');
 
 const saveJsonFile = async (jsonFilename, data) =>
   fs.writeFile(`${JSON_PATH}/${jsonFilename}`, JSON.stringify(data, null, 2));

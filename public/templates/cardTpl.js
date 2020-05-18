@@ -1,5 +1,5 @@
 const ARTICLE_CARD = (urlBase = './') => {
-   return `
+  return `
     <div class="container">
         <div class="row">
             <div class="px-md-4 text-center m-2">
@@ -47,7 +47,7 @@ const ARTICLE_CARD = (urlBase = './') => {
                                 <div class="text-center mx-auto">
                                     {{#tags}}
                                     
-                                        <a href="${urlBase}tags/?tag={{ . }}" class="card-link rounded-pill border border-info text-info pb-1 px-2 mx-2 ml-md-4"> {{ . }} </a>
+                                        <a href="${urlBase}tags/?tag={{ x }}" class="card-link rounded-pill border border-info text-info pb-1 px-2 mx-2 ml-md-4"> {{  title}} </a>
 
                                     {{/tags}}
                                 </div>
@@ -84,5 +84,5 @@ const ARTICLE_CARD = (urlBase = './') => {
             </nav>
         </div>       
     </div>
-`
+`;
 };

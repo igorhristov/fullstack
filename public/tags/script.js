@@ -9,7 +9,7 @@ const TAG_PAGE_RUN = async () => {
   const thisTag = urlParams.get('tag');
   const baseUrl = '../';
 
-  d.querySelector('#tagNameId').innerText = thisTag;
+  d.querySelector('#tagNameId').innerText = tags[thisTag];
 
   const tagsArticlesFilter = articles
     .filter(article => {
@@ -55,35 +55,12 @@ const TAG_PAGE_RUN = async () => {
       sortBtn.innerText = 'Sort by name';
     }
   });
-  const authors = await getAuthors();
+
   d.querySelector('#tagsArticlesNum').innerText = tagsArticlesFilter.length;
 
   let currentPage = 0;
   const articlesPerPage = 5;
   const totalPages = Math.ceil(tagsArticlesFilter.length / articlesPerPage);
-  console.log(totalPages);
-
-  const getPages = currentPage => {
-    let pages = [];
-    for (let i = 0; i < totalPages; i++) {
-      pages.push({
-        dataPage: i,
-        label: i + 1,
-        activeClass: currentPage === i ? 'active' : ''
-      });
-    }
-
-    return pages;
-  };
-  const disabledPrevNext = currentPage => {
-    let prevNextBtn = [
-      {
-        disabledPrev: currentPage === 0 ? 'disabled' : '',
-        disabledNext: currentPage === totalPages - 1 ? 'disabled' : ''
-      }
-    ];
-    return prevNextBtn;
-  };
 
   d.querySelector('#root').innerHTML = Mustache.render(ARTICLE_CARD(baseUrl), {
     articles: getArticleByAuthor(
@@ -92,19 +69,19 @@ const TAG_PAGE_RUN = async () => {
       comments,
       tags
     ).slice(currentPage * articlesPerPage, articlesPerPage * (currentPage + 1)),
-    pages: getPages(currentPage),
-    pagination: disabledPrevNext(currentPage)
+    pages: getPages(currentPage, totalPages),
+    pagination: disabledPrevNext(currentPage, totalPages)
   });
 
-  const tags = await getTags();
-  const tagArrValue = Object.values(tags);
+  const tagArrValue = Object.keys(tags).map(x => ({ x, title: tags[x] }));
   d.querySelector('#selectRoot').innerHTML = Mustache.render(
     tagsBtnTpl('../'),
     {
       tagArrV: tagArrValue
     }
   );
-  d.querySelector('#defTag').innerText = thisTag;
+
+  d.querySelector('#defTag').innerText = tags[thisTag];
   d.querySelector('#root').addEventListener('click', e => {
     if (e.target.matches('.page-numbers')) {
       currentPage = e.target.getAttribute('data-page') * 1;
@@ -120,8 +97,8 @@ const TAG_PAGE_RUN = async () => {
             currentPage * articlesPerPage,
             articlesPerPage * (currentPage + 1)
           ),
-          pages: getPages(currentPage),
-          pagination: disabledPrevNext(currentPage)
+          pages: getPages(currentPage, totalPages),
+          pagination: disabledPrevNext(currentPage, totalPages)
         }
       );
     }
@@ -142,8 +119,8 @@ const TAG_PAGE_RUN = async () => {
             currentPage * articlesPerPage,
             articlesPerPage * (currentPage + 1)
           ),
-          pages: getPages(currentPage),
-          pagination: disabledPrevNext(currentPage)
+          pages: getPages(currentPage, totalPages),
+          pagination: disabledPrevNext(currentPage, totalPages)
         }
       );
     }
